@@ -1,4 +1,4 @@
-nRF24_BLE
-=========
+nRF24L01+ as a BLE Advertizer
+==========================
 
-Using nRF24L01+ as a BLE advertizer
+
