@@ -13,6 +13,9 @@
 #define MY_MAC_5	0x66
 
 uint8_t buf[32];   
+static const uint8_t chRf[] = {2, 26,80};
+static const uint8_t chLe[] = {37,38,39};
+uint8_t ch = 0;  // Frequency
 
 void btLeCrc(const uint8_t* data, uint8_t len, uint8_t* dst){
 // implementing CRC with LFSR
@@ -153,9 +156,7 @@ void setup() {
 }
 
 void loop() {
-    static const uint8_t chRf[] = {2, 26,80};
-    static const uint8_t chLe[] = {37,38,39};
-    uint8_t i, L=0, ch = 0;
+    uint8_t i, L=0;
     
     buf[L++] = 0x42;	//PDU type, given address is random; 0x42 for Android and 0x40 for iPhone
     buf[L++] = 16+4; // length of payload
