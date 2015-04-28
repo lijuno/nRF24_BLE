@@ -15,7 +15,7 @@
 uint8_t buf[32];   
 static const uint8_t chRf[] = {2, 26,80};
 static const uint8_t chLe[] = {37,38,39};
-uint8_t ch = 0;  // Frequency
+uint8_t ch = 0;  // RF channel for frequency hopping
 
 void btLeCrc(const uint8_t* data, uint8_t len, uint8_t* dst){
 // implementing CRC with LFSR
