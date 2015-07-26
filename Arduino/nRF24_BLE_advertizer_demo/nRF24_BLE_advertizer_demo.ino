@@ -156,42 +156,42 @@ void setup() {
 }
 
 void loop() {
-    uint8_t i, L=0;
-    
-    buf[L++] = 0x42;	//PDU type, given address is random; 0x42 for Android and 0x40 for iPhone
-    buf[L++] = 16+4; // length of payload
-        
-    buf[L++] = MY_MAC_0;
-    buf[L++] = MY_MAC_1;
-    buf[L++] = MY_MAC_2;
-    buf[L++] = MY_MAC_3;
-    buf[L++] = MY_MAC_4;
-    buf[L++] = MY_MAC_5;
-        
-    buf[L++] = 2;		//flags (LE-only, limited discovery mode)
-    buf[L++] = 0x01;
-    buf[L++] = 0x05;
-		
-    buf[L++] = 6;   // length of the name, including type byte
-    buf[L++] = 0x08;
-    buf[L++] = 'n';
-    buf[L++] = 'R';
-    buf[L++] = 'F';
-    buf[L++] = '2';
-    buf[L++] = '4';
-        
-    buf[L++] = 3;   // length of custom data, including type byte
-    buf[L++] = 0xff;   
-    buf[L++] = 0x01;
-    buf[L++] = 0x02;  // some test data
-        
-    buf[L++] = 0x55;	//CRC start value: 0x555555
-    buf[L++] = 0x55;
-    buf[L++] = 0x55;
-        
     // Channel hopping
     for (ch=0; ch<sizeof(chRf); ch++)
     {	
+        uint8_t i, L=0;
+        
+        buf[L++] = 0x42;	//PDU type, given address is random; 0x42 for Android and 0x40 for iPhone
+        buf[L++] = 16+4; // length of payload
+            
+        buf[L++] = MY_MAC_0;
+        buf[L++] = MY_MAC_1;
+        buf[L++] = MY_MAC_2;
+        buf[L++] = MY_MAC_3;
+        buf[L++] = MY_MAC_4;
+        buf[L++] = MY_MAC_5;
+            
+        buf[L++] = 2;		//flags (LE-only, limited discovery mode)
+        buf[L++] = 0x01;
+        buf[L++] = 0x05;
+    		
+        buf[L++] = 6;   // length of the name, including type byte
+        buf[L++] = 0x08;
+        buf[L++] = 'n';
+        buf[L++] = 'R';
+        buf[L++] = 'F';
+        buf[L++] = '2';
+        buf[L++] = '4';
+            
+        buf[L++] = 3;   // length of custom data, including type byte
+        buf[L++] = 0xff;   
+        buf[L++] = 0x01;
+        buf[L++] = 0x02;  // some test data
+            
+        buf[L++] = 0x55;	//CRC start value: 0x555555
+        buf[L++] = 0x55;
+        buf[L++] = 0x55;
+
         nrf_cmd(0x25, chRf[ch]);
         nrf_cmd(0x27, 0x6E);	// Clear flags
             
