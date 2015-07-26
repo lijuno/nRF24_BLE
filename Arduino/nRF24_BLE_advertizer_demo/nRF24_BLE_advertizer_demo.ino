@@ -190,23 +190,25 @@ void loop() {
     buf[L++] = 0x55;
         
     // Channel hopping
-    if(++ch == sizeof(chRf)) ch = 0;	
-    nrf_cmd(0x25, chRf[ch]);
-    nrf_cmd(0x27, 0x6E);	// Clear flags
+    for (ch=0; ch<sizeof(chRf); ch++)
+    {	
+        nrf_cmd(0x25, chRf[ch]);
+        nrf_cmd(0x27, 0x6E);	// Clear flags
+            
+        btLePacketEncode(buf, L, chLe[ch]);
+        nrf_simplebyte(0xE2); //Clear RX Fifo
+        nrf_simplebyte(0xE1); //Clear TX Fifo
         
-    btLePacketEncode(buf, L, chLe[ch]);
-    nrf_simplebyte(0xE2); //Clear RX Fifo
-    nrf_simplebyte(0xE1); //Clear TX Fifo
-    
-    digitalWrite(PIN_CSN, LOW);
-    spi_byte(0xA0);
-    for(i = 0 ; i < L ; i++) spi_byte(buf[i]);
-    digitalWrite(PIN_CSN, HIGH); 
-    
-    nrf_cmd(0x20, 0x12);	// TX on
-    digitalWrite(PIN_CE, HIGH); // Enable Chip
-    delay(50);        // 
-    digitalWrite(PIN_CE, LOW);   // (in preparation of switching to RX quickly)
+        digitalWrite(PIN_CSN, LOW);
+        spi_byte(0xA0);
+        for(i = 0 ; i < L ; i++) spi_byte(buf[i]);
+        digitalWrite(PIN_CSN, HIGH); 
+        
+        nrf_cmd(0x20, 0x12);	// TX on
+        digitalWrite(PIN_CE, HIGH); // Enable Chip
+        delay(2);        // 
+        digitalWrite(PIN_CE, LOW);   // (in preparation of switching to RX quickly)
+    }
     delay(500);    // Broadcasting interval
 }
 
